@@ -19,15 +19,27 @@ int main()
 	double residual = 1e20;
 	double delta_x = length / n_nodes;
 	double Fr, Fl;
+	FILE *fp;
+
+	fp=fopen("user_heat_diffusion_steady.out","w");
+	fprintf(fp,"%s \t ","Niter");
+	for (int kk=0;kk<n_nodes;kk++)
+	{
+		fprintf(fp,"%s[%d]\t","T",kk);
+	}
+	fprintf(fp,"%s \n","Residual");
+	fclose(fp);
+
+
 	//memory allocation
-	T = (double*)calloc(n_nodes, sizeof(double));
-	Told = (double*)calloc(n_nodes, sizeof(double));
-	S = (double*)calloc(n_nodes, sizeof(double));
+	T 		= (double*)calloc(n_nodes, sizeof(double));
+	Told 	= (double*)calloc(n_nodes, sizeof(double));
+	S 		= (double*)calloc(n_nodes, sizeof(double));
 
 	// declare index variables
 	int i;
 	int iter = 0;
-	int max_iter = 10000;
+	int max_iter = 40;
 
 	// initialisation block
 	for (i = 0;i < n_nodes;i++)
@@ -40,8 +52,10 @@ int main()
 	//printf("%f %f \n", Tl, Tr);
 	
 	//Gauss Jacobian iterative method
+	fp=fopen("user_heat_diffusion_steady.out","a+");
 	for (iter = 0;iter < max_iter;iter++)
 	{
+
 		// Assign old array
 		for (i = 0;i < n_nodes;i++)
 		{
@@ -62,17 +76,26 @@ int main()
 		Fl = (Tl - T[0]) / delta_x;
 
 
+
+
 		// L2norm error
 		residual = L2norm(Told, T);
+		//Write output file
+		fprintf(fp,"%d \t",iter);
+		for (i = 0;i < n_nodes;i++)
+		{
+			fprintf(fp,"%e \t",T[i]);
+		}
+		fprintf(fp,"%e \n",residual);
 		printf("Iteration: %d Temperature midpoint: %e Residual: %f Flux Right: %e Flux left: %e\n", iter, T[int(n_nodes/2)], residual,Fr,Fl);
 		if (residual < 1e-17)
 		{
 			printf("CONVERGED!");
 			exit(0);
-
 		}
 		
 	}
+	fclose(fp);
 	return(0);
 }
 
