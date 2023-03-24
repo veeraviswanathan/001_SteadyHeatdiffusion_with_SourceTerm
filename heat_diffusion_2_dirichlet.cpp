@@ -39,7 +39,7 @@ int main()
 	// declare index variables
 	int i;
 	int iter = 0;
-	int max_iter = 40;
+	int max_iter = 400000;
 
 	// initialisation block
 	for (i = 0;i < n_nodes;i++)
@@ -64,7 +64,7 @@ int main()
 		}
 
 		T[0] = (1.0/3)*(S[0] + (2 * Tl) + T[1]);
-		for (i = 1;i < n_nodes - 2;i++)
+		for (i = 1;i < n_nodes - 1;i++)
 		{
 			T[i] = (1.0/2)*(S[i] + T[i + 1] + T[i - 1]);
 		}
