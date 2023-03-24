@@ -51,7 +51,7 @@ int main()
 	//S[int(n_nodes/2)]= 5000 * (delta_x * delta_x / k);
 	//printf("%f %f \n", Tl, Tr);
 	
-	//Gauss Jacobian iterative method
+	//Gauss Siedel iterative method
 	fp=fopen("user_heat_diffusion_steady.out","a+");
 	for (iter = 0;iter < max_iter;iter++)
 	{
