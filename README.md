@@ -5,4 +5,4 @@ Usual starting point: 1D steady heat diffusion equation with a source term, with
 3. Ghost points used to specify boundary condition on the RHS matrix: for example; (1/2) * (T-1 + T0) = TL
 4. Source term is included in RHS matrix. 
 5. At the moment: A source term can be added using direct array assignment --> for example S[4] = A 
-
+6. column formatted output file is generated
